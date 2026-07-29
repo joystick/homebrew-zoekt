@@ -29,4 +29,7 @@ Version `0.0.YYYYMMDD` reflects the build date of the upstream
 
 ## Building the binaries yourself
 
-See [`../BUILD.md`](../BUILD.md) for the cross-compile + release steps.
+Run [`scripts/build-release.sh`](scripts/build-release.sh) — it clones upstream,
+cross-compiles both darwin architectures, packages tarballs, and publishes a
+GitHub release. Then bump `version` and the two `sha256` values in
+`Formula/zoekt.rb` and push.
