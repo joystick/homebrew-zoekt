@@ -121,6 +121,8 @@ download, but if you still hit the prompt:
 ```sh
 # Clear the quarantine flag on all installed zoekt binaries
 xattr -dr com.apple.quarantine "$(brew --prefix)/opt/zoekt/bin"
+# If you get "Permission denied" (Cellar owned by another user), prefix with sudo:
+sudo xattr -dr com.apple.quarantine "$(brew --prefix)/opt/zoekt/bin"
 ```
 
 Or approve a specific binary after it's blocked once: **System Settings →
