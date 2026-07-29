@@ -1,5 +1,9 @@
 # homebrew-zoekt
 
+[![brew install](https://img.shields.io/badge/brew%20install-zoekt-orange?logo=homebrew&logoColor=white)](https://github.com/joystick/homebrew-zoekt)
+[![release](https://img.shields.io/github/v/release/joystick/homebrew-zoekt?label=release)](https://github.com/joystick/homebrew-zoekt/releases/latest)
+[![platform](https://img.shields.io/badge/platform-macOS%20(arm64%20%7C%20x86__64)-blue)](https://github.com/joystick/homebrew-zoekt/releases/latest)
+
 Homebrew tap for [zoekt](https://github.com/sourcegraph/zoekt), the fast
 trigram-based code search engine (Sourcegraph fork). Ships prebuilt macOS
 binaries — no Go toolchain required.
