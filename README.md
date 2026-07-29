@@ -26,6 +26,34 @@ All zoekt command-line tools are installed into your Homebrew `bin`, including:
 - `zoekt-git-clone`, `zoekt-merge-index`, `zoekt-test`
 - `zoekt-mirror-{github,gitlab,gitea,gerrit,bitbucket-server,gitiles}`
 
+## Usage
+
+Index a directory of source, then search it:
+
+```sh
+# Build an index for ./my-project into ./idx
+zoekt-index -index ./idx ./my-project
+
+# Search the index from the command line
+zoekt -index_dir ./idx 'needle'
+
+# Restrict by file, language, or regexp — zoekt query syntax
+zoekt -index_dir ./idx 'file:\.go$ func.*Handler'
+```
+
+Index a git repository directly (indexes each branch you ask for):
+
+```sh
+zoekt-git-index -branches HEAD -index ./idx /path/to/repo.git
+```
+
+Serve search over HTTP with a web UI + JSON API:
+
+```sh
+zoekt-webserver -index ./idx -listen :6070
+# open http://localhost:6070
+```
+
 ## Versioning
 
 Version `0.0.YYYYMMDD` reflects the build date of the upstream
