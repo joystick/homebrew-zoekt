@@ -24,7 +24,7 @@
 set -euo pipefail
 
 VER="${VER:-0.0.$(date +%Y%m%d)}"
-REPO="joystick/homebrew-zoekt"
+REPO="joystick/zoekt"
 SIGN_ID="${SIGN_ID:-}"
 NOTARY_PROFILE="${NOTARY_PROFILE:-}"
 WORK="$(mktemp -d)"
