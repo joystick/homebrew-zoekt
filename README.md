@@ -30,6 +30,34 @@ Version `0.0.YYYYMMDD` reflects the build date of the upstream
 ## Building the binaries yourself
 
 Run [`scripts/build-release.sh`](scripts/build-release.sh) — it clones upstream,
-cross-compiles both darwin architectures, packages tarballs, and publishes a
-GitHub release. Then bump `version` and the two `sha256` values in
-`Formula/zoekt.rb` and push.
+cross-compiles both darwin architectures, optionally codesigns + notarizes,
+packages tarballs, and publishes a GitHub release. Then bump `version` and the
+two `sha256` values in `Formula/zoekt.rb` and push.
+
+### Codesigning + notarization (optional)
+
+Requires a paid Apple Developer Program membership with a **Developer ID
+Application** certificate (an "Apple Development" cert will be rejected by the
+notary service). First store notary credentials once:
+
+```sh
+xcrun notarytool store-credentials zoekt-notary \
+  --apple-id you@example.com --team-id ABCDE12345 \
+  --password <app-specific-password>
+```
+
+Then export before building:
+
+```sh
+export SIGN_ID="Developer ID Application: Your Name (ABCDE12345)"
+export NOTARY_PROFILE="zoekt-notary"
+VER=0.0.$(date +%Y%m%d) ./scripts/build-release.sh
+```
+
+- `SIGN_ID` unset → unsigned binaries (fine locally; other Macs may quarantine).
+- `SIGN_ID` set, `NOTARY_PROFILE` unset → signed but not notarized.
+- Both set → signed with hardened runtime + notarized.
+
+Note: bare CLI executables cannot be *stapled* (stapling only applies to
+`.app`/`.pkg`/`.dmg`), so the script submits a zip of the signed binaries;
+Gatekeeper validates the registered signatures via an online check.
