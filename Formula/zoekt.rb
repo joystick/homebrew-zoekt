@@ -7,11 +7,11 @@ class Zoekt < Formula
   on_macos do
     on_intel do
       url "https://github.com/joystick/homebrew-zoekt/releases/download/v0.0.20260729/zoekt-0.0.20260729-darwin-amd64.tar.gz"
-      sha256 "e966e2182db5c5fc05b3c7fe14530c98613488de92fd8b3e2944458e8cfda3ef"
+      sha256 "29099c1591a2b995306f89c6a479ee21d8a83cec4d578da3b7e8c3d5e0cfb7c8"
     end
     on_arm do
       url "https://github.com/joystick/homebrew-zoekt/releases/download/v0.0.20260729/zoekt-0.0.20260729-darwin-arm64.tar.gz"
-      sha256 "e6d487c2a2724974b6bc1df79a8b2a78ccee2453183244094c927b9a833ad77c"
+      sha256 "4b51ba2bd2ef12dba32a5db11f9a0eb0cfdbb0d266b00a7387ffe7d61ca697b3"
     end
   end
 
