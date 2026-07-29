@@ -93,3 +93,44 @@ VER=0.0.$(date +%Y%m%d) ./scripts/build-release.sh
 Note: bare CLI executables cannot be *stapled* (stapling only applies to
 `.app`/`.pkg`/`.dmg`), so the script submits a zip of the signed binaries;
 Gatekeeper validates the registered signatures via an online check.
+
+## Troubleshooting
+
+### `brew install` refuses the tap as "untrusted"
+
+Homebrew 6.0+ requires you to explicitly trust third-party taps before it will
+load their formulae:
+
+```
+Error: Refusing to load formula joystick/zoekt/zoekt from untrusted tap ...
+```
+
+Trust the tap once, then install:
+
+```sh
+brew trust joystick/zoekt
+brew install zoekt
+```
+
+### macOS Gatekeeper: "cannot be opened because the developer cannot be verified"
+
+Until a notarized release ships, the binaries are unsigned, so on first run
+macOS may quarantine them. Homebrew normally strips the quarantine attribute on
+download, but if you still hit the prompt:
+
+```sh
+# Clear the quarantine flag on all installed zoekt binaries
+xattr -dr com.apple.quarantine "$(brew --prefix)/opt/zoekt/bin"
+```
+
+Or approve a specific binary after it's blocked once: **System Settings →
+Privacy & Security → "Allow Anyway"**, then re-run the command. Verify a
+binary's signing/quarantine state with:
+
+```sh
+codesign -dvv "$(brew --prefix)/bin/zoekt" 2>&1 | grep -i authority
+xattr "$(brew --prefix)/bin/zoekt"   # no output = not quarantined
+```
+
+Do **not** disable Gatekeeper globally (`spctl --master-disable`) — clearing the
+quarantine flag on just these binaries is sufficient and far safer.
