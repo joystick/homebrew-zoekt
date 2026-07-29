@@ -20,7 +20,12 @@ class Zoekt < Formula
   end
 
   test do
-    output = shell_output("#{bin}/zoekt --help 2>&1", 2)
-    assert_match "Usage", output
+    (testpath/"src/hello.go").write <<~GO
+      package main
+      func main() { println("needle_in_haystack") }
+    GO
+    system bin/"zoekt-index", "-index", testpath/"idx", testpath/"src"
+    output = shell_output("#{bin}/zoekt -index_dir #{testpath}/idx needle_in_haystack")
+    assert_match "hello.go", output
   end
 end
